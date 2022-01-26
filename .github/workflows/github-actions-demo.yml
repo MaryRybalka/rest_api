@@ -27,12 +27,9 @@ jobs:
     runs-on: ubuntu-latest
     if: github.repository == 'MaryRybalka/rest_api'
     steps:
-      - uses: MaryRybalka/rest_api
-        with:
-          php-version: '8.0'
-      - uses: actions/checkout@v2
       - run: echo "Start ${{ github.event_name }} event."
 
+      - uses: rest_api/vendor
       - name: Use PHP-cs-fixer
         run: ./vendor/bin/php-cs-fixer fix src
       - run: echo "Finish fix src."
