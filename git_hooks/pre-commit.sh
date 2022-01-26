@@ -1,3 +1,4 @@
 #!/bin/bash
 
-echo "Hello World"
+tools/php-cs-fixer/vendor/bin/php-cs-fixer fix src
+git add .
