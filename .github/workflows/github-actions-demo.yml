@@ -23,5 +23,5 @@ jobs:
 
       - run: echo "Start Testing."
       - name: Execute tests PHPUnit
-        run: vendor/bin/phpunit tests
+        run: vendor/bin/phpunit tests/UserTest.php
       - run: echo "Finish Testing."
