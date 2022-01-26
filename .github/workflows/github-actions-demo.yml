@@ -15,7 +15,16 @@ jobs:
       - name: Install dependencies
         run: composer install
       - run: echo "Finish Install dependencies."
-
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
       - run: echo "Start fix src."
       - name: Use PHP-cs-fixer
         run: vendor/bin/php-cs-fixer fix src
