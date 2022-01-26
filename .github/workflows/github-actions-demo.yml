@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./rest_api
+        working-directory: ./rest_api/vendor
     if: github.repository == 'MaryRybalka/rest_api'
     steps:
       - uses: actions/checkout@v2
