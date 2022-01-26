@@ -1,0 +1,29 @@
+name: Rest-API
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  unitphp:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./tests
+    steps:
+      - run: echo "Start ${{ github.event_name }} event."
+      
+      - run: echo "Start Install dependencies."
+      - name: Install dependencies
+        run: composer install
+      - run: echo "Finish Install dependencies."
+
+      - run: echo "Start fix src."
+      - name: Use PHP-cs-fixer
+        run: vendor/bin/php-cs-fixer fix src
+      - run: echo "Finish fix src."
+
+      - run: echo "Start Testing."
+      - name: Execute tests PHPUnit
+        run: ./vendor/bin/phpunit tests
+      - run: echo "Finish Testing."
