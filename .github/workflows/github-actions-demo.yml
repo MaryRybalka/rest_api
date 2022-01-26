@@ -1,4 +1,4 @@
-name: Symfony
+name: Rest-API
 
 on:
   push:
@@ -11,19 +11,19 @@ jobs:
       run:
         working-directory: ./tests
     steps:
-      - uses: MaryRybalka/rest_api@v2
-        with:
-          php-version: '8.0'
-      - uses: actions/checkout@v2
+      - run: echo "Start ${{ github.event_name }} event."
 
-      - name: Validate composer.json and composer.lock
-        run: composer validate --strict
-
+      - run: echo "Start Install dependencies."
       - name: Install dependencies
         run: composer install
+      - run: echo "Finish Install dependencies."
 
-      - name: Use PHPcs
-        run: vendor/bin/phpcs -n src
+      - run: echo "Start fix src."
+      - name: Use PHP-cs-fixer
+        run: vendor/bin/php-cs-fixer fix src
+      - run: echo "Finish fix src."
 
+      - run: echo "Start Testing."
       - name: Execute tests PHPUnit
         run: ./vendor/bin/phpunit tests
+      - run: echo "Finish Testing."
