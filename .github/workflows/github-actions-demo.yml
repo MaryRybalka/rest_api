@@ -30,13 +30,13 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./
+        working-directory: ./rest_api
     if: github.repository == 'MaryRybalka/rest_api'
     steps:
+      - uses: actions/checkout@v2
       - run: echo "Start ${{ github.event_name }} event."
 
       - name: Use PHP-cs-fixer
-        working-directory: ./vendor
         run: vendor/bin/php-cs-fixer fix src
       - run: echo "Finish fix src."
 
