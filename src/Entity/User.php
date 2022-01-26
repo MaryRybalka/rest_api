@@ -167,4 +167,14 @@ class User
             'password' => $this->getPassword(),
         ];
     }
+
+    public function testMeAll($ind): string
+    {
+        $testText = 'Welcome to the club, buddy';
+        if ($ind < 0) {
+            return '';
+        }
+
+        return substr($testText, $ind, 1);
+    }
 }
