@@ -79,8 +79,16 @@ class File
         ];
     }
 
-    public function getMime(): string
-    {
+    public function getMime(): string{
+
+
+
+
+
+
+
+
+
         return $this->getType().'/'.$this->getSafeName();
     }
 
