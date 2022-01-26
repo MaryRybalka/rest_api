@@ -76,17 +76,13 @@
         "symfony": {
             "allow-contrib": false,
             "require": "5.3.*"
-        },
-        "hooks": {
-            "commit-msg": [
-                "echo \"Hello World\""
-            ]
         }
     },
     "require-dev": {
         "phpstan/phpstan": "^1.2",
         "squizlabs/php_codesniffer": "3.*",
         "symfony/maker-bundle": "^1.36",
-        "symplify/easy-coding-standard": "^10.0"
+        "symplify/easy-coding-standard": "^10.0",
+        "friendsofphp/php-cs-fixer": "^3.2"
     }
 }
