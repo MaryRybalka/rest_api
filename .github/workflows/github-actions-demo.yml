@@ -30,10 +30,10 @@ jobs:
       - run: echo "Start ${{ github.event_name }} event."
 
       - name: Use PHP-cs-fixer
-        run: vendor/bin/php-cs-fixer fix src
+        run: ./vendor/bin/php-cs-fixer fix src
       - run: echo "Finish fix src."
 
       - run: echo "Start Testing."
       - name: Execute tests PHPUnit
-        run: vendor/bin/phpunit
+        run: ./vendor/bin/phpunit
       - run: echo "Finish Testing."
