@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./tests
+        working-directory: tests
     steps:
       - run: echo "Start ${{ github.event_name }} event."
 
@@ -23,5 +23,5 @@ jobs:
 
       - run: echo "Start Testing."
       - name: Execute tests PHPUnit
-        run: ./vendor/bin/phpunit tests
+        run: vendor/bin/phpunit tests
       - run: echo "Finish Testing."
