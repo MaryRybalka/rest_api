@@ -3,7 +3,8 @@ name: Rest-API
 on: [push]
 
 jobs:
-  unitphp:
+  production-deploy:
+    if: github.repository == 'rest_api_prod'
     runs-on: ubuntu-latest
     steps:
       - run: echo "Start ${{ github.event_name }} event."
@@ -12,17 +13,22 @@ jobs:
       - name: Install dependencies
         run: composer install
       - run: echo "Finish Install dependencies."
-      - name: Cache Composer packages
-        id: composer-cache
-        uses: actions/cache@v2
-        with:
-          path: vendor
-          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-php-
-      - name: Install Dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-      - run: echo "Start fix src."
+
+      - name: Use PHP-cs-fixer
+        run: vendor/bin/php-cs-fixer fix src
+      - run: echo "Finish fix src."
+
+      - run: echo "Start Testing."
+      - name: Execute tests PHPUnit
+        run: vendor/bin/phpunit
+      - run: echo "Finish Testing."
+
+  staging-deploy:
+    runs-on: ubuntu-latest
+    if: github.repository == 'rest_api'
+    steps:
+      - run: echo "Start ${{ github.event_name }} event."
+
       - name: Use PHP-cs-fixer
         run: vendor/bin/php-cs-fixer fix src
       - run: echo "Finish fix src."
