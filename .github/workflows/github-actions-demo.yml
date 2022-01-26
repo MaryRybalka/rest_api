@@ -34,11 +34,10 @@ jobs:
     if: github.repository == 'MaryRybalka/rest_api'
     steps:
       - uses: actions/checkout@v2
-        with:
-          path: /home/runner/work/rest_api/vendor
       - run: echo "Start ${{ github.event_name }} event."
 
       - name: Use PHP-cs-fixer
+        working-directory: ./vendor
         run: vendor/bin/php-cs-fixer fix src
       - run: echo "Finish fix src."
 
