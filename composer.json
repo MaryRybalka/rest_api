@@ -76,6 +76,11 @@
         "symfony": {
             "allow-contrib": false,
             "require": "5.3.*"
+        },
+        "hooks": {
+            "commit-msg": [
+                "echo \"Hello World\""
+            ]
         }
     },
     "require-dev": {
