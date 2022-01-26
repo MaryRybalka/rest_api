@@ -6,6 +6,9 @@ jobs:
   production-deploy:
     if: github.repository == 'MaryRybalka/rest_api_prod'
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./rest_api_prod
     steps:
       - run: echo "Start ${{ github.event_name }} event."
 
@@ -25,6 +28,9 @@ jobs:
 
   staging-deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./rest_api
     if: github.repository == 'MaryRybalka/rest_api'
     steps:
       - uses: actions/checkout@v2
