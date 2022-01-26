@@ -29,7 +29,6 @@ jobs:
     steps:
       - run: echo "Start ${{ github.event_name }} event."
 
-      - uses: rest_api/vendor
       - name: Use PHP-cs-fixer
         run: ./vendor/bin/php-cs-fixer fix src
       - run: echo "Finish fix src."
