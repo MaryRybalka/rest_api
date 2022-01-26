@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.repository == 'MaryRybalka/rest_api'
     steps:
-      - uses: MaryRybalka/rest_api@v2
+      - uses: MaryRybalka/rest_api
         with:
           php-version: '8.0'
       - uses: actions/checkout@v2
