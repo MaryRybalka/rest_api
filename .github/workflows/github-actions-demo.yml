@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   production-deploy:
-    if: github.repository == 'rest_api_prod'
+    if: github.repository == 'MaryRybalka/rest_api_prod'
     runs-on: ubuntu-latest
     steps:
       - run: echo "Start ${{ github.event_name }} event."
@@ -25,7 +25,7 @@ jobs:
 
   staging-deploy:
     runs-on: ubuntu-latest
-    if: github.repository == 'rest_api'
+    if: github.repository == 'MaryRybalka/rest_api'
     steps:
       - run: echo "Start ${{ github.event_name }} event."
 
