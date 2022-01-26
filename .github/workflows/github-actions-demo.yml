@@ -33,8 +33,6 @@ jobs:
         working-directory: ./
     if: github.repository == 'MaryRybalka/rest_api'
     steps:
-      - uses: actions/checkout@v2
-      - uses: ./.github/actions/Rest-API
       - run: echo "Start ${{ github.event_name }} event."
 
       - name: Use PHP-cs-fixer
