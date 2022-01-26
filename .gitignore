@@ -10,7 +10,10 @@ docker-compose.yml
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /var/
+
 /vendor/
+vendor/
+
 /bin/
 /migrations/
 /public/.htaccess
