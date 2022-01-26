@@ -2,6 +2,15 @@
     "composer/package-versions-deprecated": {
         "version": "1.11.99.4"
     },
+    "composer/pcre": {
+        "version": "1.0.1"
+    },
+    "composer/semver": {
+        "version": "3.2.7"
+    },
+    "composer/xdebug-handler": {
+        "version": "2.0.4"
+    },
     "doctrine/annotations": {
         "version": "1.13",
         "recipe": {
@@ -85,6 +94,18 @@
     "firebase/php-jwt": {
         "version": "v5.5.0"
     },
+    "friendsofphp/php-cs-fixer": {
+        "version": "3.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "be2103eb4a20942e28a6dd87736669b757132435"
+        },
+        "files": [
+            ".php-cs-fixer.dist.php"
+        ]
+    },
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.5"
     },
@@ -120,6 +141,9 @@
     },
     "paragonie/sodium_compat": {
         "version": "v1.17.0"
+    },
+    "php-cs-fixer/diff": {
+        "version": "v2.0.2"
     },
     "phpstan/phpstan": {
         "version": "1.2.0"
@@ -304,6 +328,9 @@
     },
     "symfony/polyfill-php81": {
         "version": "v1.23.0"
+    },
+    "symfony/process": {
+        "version": "v5.3.13"
     },
     "symfony/property-access": {
         "version": "v5.3.8"

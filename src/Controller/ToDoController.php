@@ -5,9 +5,7 @@ namespace App\Controller;
 use App\Entity\ToDo;
 use App\Repository\ToDoRepository;
 use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use Firebase\JWT\JWT;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,8 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class ToDoController
- * @package App\Controller
+ * Class ToDoController.
+ *
  * @Route("/")
  */
 class ToDoController extends AbstractController
@@ -24,9 +22,6 @@ class ToDoController extends AbstractController
     private $author;
 
     /**
-     * @param Request $request
-     * @param ToDoRepository $todoRepository
-     * @param UserRepository $userRepository
      * @return JsonResponse
      * @Route("todo", name="todo_index", methods={"GET"})
      */
@@ -43,31 +38,30 @@ class ToDoController extends AbstractController
         if ($founded) {
             if ($founded->jsonSerialize()['password'] !== UserController::hashPassword($decode['password'])) {
                 return $this->response([
-                    'status' => "405",
-                    'message' => "Wrong password",
-                ], "405");
+                    'status' => '405',
+                    'message' => 'Wrong password',
+                ], '405');
             } else {
                 $this->author = $founded->jsonSerialize()['id'];
                 $data = $todoRepository->findBy(['author' => $this->author]);
-                for ($i = 0; $i < count($data); $i++) {
+                for ($i = 0; $i < count($data); ++$i) {
                     $data[$i] = $data[$i]->jsonSerialize();
                 }
+
                 return $this->response($data);
             }
         } else {
             return $this->response([
-                'status' => "402",
-                'message' => "User not exist",
-            ], "402");
+                'status' => '402',
+                'message' => 'User not exist',
+            ], '402');
         }
     }
 
     /**
-     * @param Request $request
-     * @param ToDoRepository $todoRepository
-     * @param UserRepository $userRepository
      * @return JsonResponse
      * @Route("todo", name="todo_add", methods={"POST"})
+     *
      * @throws Exception
      */
     public function new(Request $request, ToDoRepository $todoRepository, UserRepository $userRepository): Response
@@ -78,9 +72,9 @@ class ToDoController extends AbstractController
         if ($founded) {
             if ($founded->jsonSerialize()['password'] !== UserController::hashPassword($decode['password'])) {
                 return $this->response([
-                    'status' => "405",
-                    'message' => "Wrong password",
-                ], "405");
+                    'status' => '405',
+                    'message' => 'Wrong password',
+                ], '405');
             } else {
                 $this->author = $founded;
                 $description = $decode['description'];
@@ -88,9 +82,9 @@ class ToDoController extends AbstractController
 
                 if (!isset($title) || !isset($description)) {
                     return $this->response([
-                        'status' => "401",
-                        'message' => "You should provide title and description "
-                    ], "401");
+                        'status' => '401',
+                        'message' => 'You should provide title and description ',
+                    ], '401');
                 }
 
                 $entityManager = $this->getDoctrine()->getManager();
@@ -104,16 +98,17 @@ class ToDoController extends AbstractController
                 $entityManager->flush();
 
                 $data = [
-                    'status' => "200",
-                    'success' => "ToDo added successfully",
+                    'status' => '200',
+                    'success' => 'ToDo added successfully',
                 ];
+
                 return $this->response($data);
             }
         } else {
             return $this->response([
-                'status' => "402",
-                'message' => "User not exist",
-            ], "402");
+                'status' => '402',
+                'message' => 'User not exist',
+            ], '402');
         }
     }
 
@@ -128,21 +123,21 @@ class ToDoController extends AbstractController
         if ($founded) {
             if ($founded->jsonSerialize()['password'] !== UserController::hashPassword($decode['password'])) {
                 return $this->response([
-                    'status' => "405",
-                    'message' => "Wrong password",
-                ], "405");
+                    'status' => '405',
+                    'message' => 'Wrong password',
+                ], '405');
             } else {
                 $entityManager = $this->getDoctrine()->getManager();
                 $todo = $todoRepository->find($id);
 
                 if (!$todo) {
                     return $this->response([
-                        'status' => "407",
-                        'errors' => "Todo not found",
-                    ], "407");
+                        'status' => '407',
+                        'errors' => 'Todo not found',
+                    ], '407');
                 }
-                $title = "";
-                $description = "";
+                $title = '';
+                $description = '';
                 if (isset($decode['title'])) {
                     $title = $decode['title'];
                 }
@@ -160,16 +155,17 @@ class ToDoController extends AbstractController
                 $entityManager->flush();
 
                 $data = [
-                    'status' => "200",
-                    'errors' => "ToDo was updated successfully",
+                    'status' => '200',
+                    'errors' => 'ToDo was updated successfully',
                 ];
+
                 return $this->response($data);
             }
         } else {
             return $this->response([
-                'status' => "402",
-                'message' => "User not exist",
-            ], "402");
+                'status' => '402',
+                'message' => 'User not exist',
+            ], '402');
         }
     }
 
@@ -184,44 +180,45 @@ class ToDoController extends AbstractController
         if ($founded) {
             if ($founded->jsonSerialize()['password'] !== UserController::hashPassword($decode['password'])) {
                 return $this->response([
-                    'status' => "405",
-                    'message' => "Wrong password",
-                ], "405");
+                    'status' => '405',
+                    'message' => 'Wrong password',
+                ], '405');
             } else {
                 $entityManager = $this->getDoctrine()->getManager();
                 $todo = $todoRepository->find($id);
 
                 if (!$todo) {
                     $data = [
-                        'status' => "407",
-                        'errors' => "Todo not found",
+                        'status' => '407',
+                        'errors' => 'Todo not found',
                     ];
-                    return $this->response($data, "407");
+
+                    return $this->response($data, '407');
                 }
                 $entityManager->remove($todo);
                 $entityManager->flush();
 
                 $data = [
-                    'status' => "200",
-                    'errors' => "ToDo was deleted successfully",
+                    'status' => '200',
+                    'errors' => 'ToDo was deleted successfully',
                 ];
+
                 return $this->response($data);
             }
         } else {
             return $this->response([
-                'status' => "402",
-                'message' => "User not exist",
-            ], "402");
+                'status' => '402',
+                'message' => 'User not exist',
+            ], '402');
         }
     }
 
     /**
-     * Returns a JSON response
+     * Returns a JSON response.
      *
      * @param array $data
      * @param $status
      * @param array $headers
-     * @return JsonResponse
      */
     public function response($data, $status = 200, $headers = []): JsonResponse
     {
@@ -232,7 +229,7 @@ class ToDoController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
 
-        if ($data === null) {
+        if (null === $data) {
             return $request;
         }
 
@@ -247,9 +244,9 @@ class ToDoController extends AbstractController
         $founded = $userRepository->findOneBy(['email' => $decode['email']]);
         if (!$founded) {
             return $this->response([
-                'status' => "402",
-                'message' => "User not exist",
-            ], "402");
+                'status' => '402',
+                'message' => 'User not exist',
+            ], '402');
         } else {
             return $founded->jsonSerialize();
         }

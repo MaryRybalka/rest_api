@@ -5,9 +5,7 @@ namespace App\Controller;
 use App\Entity\File;
 use App\Repository\FileRepository;
 use App\Service\FileUploader;
-use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use Firebase\JWT\JWT;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -18,24 +16,22 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class FileController
+ * Class FileController.
+ *
  * @category PHP
- * @package  App\Controller
+ *
  * @author   mashka krasnova <mashka@example.com>
  * @license  https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt /
  * somename
  * BSD Licence
- * @link     https://github.com/MaryRybalka/restClient
+ *
+ * @see     https://github.com/MaryRybalka/restClient
  *
  * @Route("/")
  */
 class FileController extends AbstractController
 {
     /**
-     * @param FileRepository $fileRepository
-     *
-     * @return Response
-     *
      * @return JsonResponse
      *
      * @Route("files/", name="file_index", methods={"GET"})
@@ -44,32 +40,32 @@ class FileController extends AbstractController
     {
         $data = $fileRepository->findAll();
         if (count($data) > 0) {
-            for ($i = 0; $i < count($data); $i++) {
+            for ($i = 0; $i < count($data); ++$i) {
                 $data[$i] =
                     $data[$i]->jsonSerialize();
             }
+
             return $this->response($data);
         }
+
         return $this->response([
-            'status' => "201",
-            'message' => "No Files",
-        ], "201");
+            'status' => '201',
+            'message' => 'No Files',
+        ], '201');
     }
 
     /**
-     * lsllss
+     * lsllss.
      *
-     * @param Request $request
-     * @param FileRepository $fileRepository
-     * @param FileUploader $fileUploader
-     * @param           $name
+     * @param $name
+     *
      * @return JsonResponse
      * @Route("files/{name}", name="file_add", methods={"POST"})
      */
     public function new(
-        Request        $request,
+        Request $request,
         FileRepository $fileRepository,
-        FileUploader   $fileUploader,
+        FileUploader $fileUploader,
         $name
     ): Response {
         $fileData = $request->files->get('file');
@@ -80,11 +76,10 @@ class FileController extends AbstractController
                 $sluggedFileName = $fileUploader->upload($fileData);
             } catch (Exception $error) {
                 return $this->response([
-                    'status' => "403",
+                    'status' => '403',
                     'message' => $error->getMessage(),
-                ], "403");
+                ], '403');
             }
-
 
             $entityManager = $this->getDoctrine()->getManager();
             $file = new File();
@@ -96,21 +91,22 @@ class FileController extends AbstractController
             $entityManager->flush();
 
             return $this->response([
-                'status' => "200",
-                'message' => "File was added successfully",
+                'status' => '200',
+                'message' => 'File was added successfully',
             ]);
         }
+
         return $this->response([
-            'status' => "402",
-            'message' => "Incorrect data",
-        ], "402");
+            'status' => '402',
+            'message' => 'Incorrect data',
+        ], '402');
     }
 
     /**
-     * lalal
+     * lalal.
      *
-     * @param FileRepository $fileRepository
-     * @param           $id
+     * @param $id
+     *
      * @return BinaryFileResponse
      * @Route("files/{id}", name="file_by_id", methods={"GET"})
      */
@@ -120,31 +116,31 @@ class FileController extends AbstractController
         if ($data) {
             return $this->binaryResponse($data->getMime());
         }
+
         return $this->response([
-            'status' => "401",
-            'message' => "No File with that id: " . $id,
-        ], "401");
+            'status' => '401',
+            'message' => 'No File with that id: '.$id,
+        ], '401');
     }
 
     /**
-     * lalala
+     * lalala.
      *
-     * @param Request $request
-     * @param FileRepository $fileRepository
      * @param $id
+     *
      * @return JsonResponse
      * @Route("files/{id}", name="file_delete", methods={"DELETE"})
      */
     public function delete(
-        Request        $request,
+        Request $request,
         FileRepository $fileRepository,
         $id
     ): Response {
         $file = $fileRepository->find($id);
         if (!$file) {
             return $this->response([
-                'status' => "401",
-                'message' => "No File with that id: " . $id,
+                'status' => '401',
+                'message' => 'No File with that id: '.$id,
             ]);
         }
         $filesystem = new Filesystem();
@@ -152,9 +148,9 @@ class FileController extends AbstractController
             $filesystem->remove([$file->getMime()]);
         } catch (IOExceptionInterface $exception) {
             return $this->response([
-                'status' => "405",
+                'status' => '405',
                 'message' => "Can't delete from directory",
-            ], "405");
+            ], '405');
         }
 
         $entityManager = $this->getDoctrine()->getManager();
@@ -162,18 +158,17 @@ class FileController extends AbstractController
         $entityManager->flush();
 
         return $this->response([
-            'status' => "200",
-            'message' => "File was deleted successfully",
-        ], "200");
+            'status' => '200',
+            'message' => 'File was deleted successfully',
+        ], '200');
     }
 
     /**
-     * Returns a JSON response
+     * Returns a JSON response.
      *
      * @param array $data
-     * @param           $status
+     * @param       $status
      * @param array $headers
-     * @return JsonResponse
      */
     public function response($data, $status = 200, $headers = []): JsonResponse
     {
@@ -181,10 +176,9 @@ class FileController extends AbstractController
     }
 
     /**
-     * Returns a binary response
+     * Returns a binary response.
      *
      * @param $mime
-     * @return BinaryFileResponse
      */
     public function binaryResponse($mime): BinaryFileResponse
     {

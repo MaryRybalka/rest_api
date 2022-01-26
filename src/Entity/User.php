@@ -6,7 +6,6 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Exception;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -14,7 +13,7 @@ use Exception;
 class User
 {
     /**
-     * Just an id
+     * Just an id.
      *
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -23,21 +22,21 @@ class User
     private $id;
 
     /**
-     * Just an email
+     * Just an email.
      *
      * @ORM\Column(type="string", length=100)
      */
     private $email;
 
     /**
-     * Just a password
+     * Just a password.
      *
      * @ORM\Column(type="string", length=200)
      */
     private $password;
 
     /**
-     * Just a todolist
+     * Just a todolist.
      *
      * @ORM\OneToMany(targetEntity=ToDo::class, mappedBy="author",
      *     orphanRemoval=true)
@@ -45,7 +44,7 @@ class User
     private $todo_list;
 
     /**
-     * Just a constr
+     * Just a constr.
      *
      * @return void
      */
@@ -55,7 +54,7 @@ class User
     }
 
     /**
-     * Just a get
+     * Just a get.
      *
      * @return int
      */
@@ -65,7 +64,7 @@ class User
     }
 
     /**
-     * Just a getemail
+     * Just a getemail.
      *
      * @return string
      */
@@ -75,11 +74,9 @@ class User
     }
 
     /**
-     * Just a setemail
+     * Just a setemail.
      *
      * @param string $_email bla-bla
-     *
-     * @return self
      */
     public function setEmail(string $_email): self
     {
@@ -89,7 +86,7 @@ class User
     }
 
     /**
-     * Just a getpas
+     * Just a getpas.
      *
      * @return string
      */
@@ -99,11 +96,9 @@ class User
     }
 
     /**
-     * Just a setpass
+     * Just a setpass.
      *
      * @param string $_password bla-bla
-     *
-     * @return self
      */
     public function setPassword(string $_password): self
     {
@@ -113,7 +108,7 @@ class User
     }
 
     /**
-     * Just a getTodoList
+     * Just a getTodoList.
      *
      * @return Collection|ToDo[]
      */
@@ -123,11 +118,9 @@ class User
     }
 
     /**
-     * Just a getTodoList
+     * Just a getTodoList.
      *
      * @param ToDo $todoList bla-bla
-     *
-     * @return self
      */
     public function addTodoList(ToDo $todoList): self
     {
@@ -140,11 +133,9 @@ class User
     }
 
     /**
-     * Just a getTodoList
+     * Just a getTodoList.
      *
      * @param ToDo $todoList bla-bla
-     *
-     * @return self
      */
     public function removeTodoList(ToDo $todoList): self
     {
@@ -159,19 +150,21 @@ class User
     }
 
     /**
-     * Specify data which should be serialized to JSON
+     * Specify data which should be serialized to JSON.
      *
-     * @link   https://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @see   https://php.net/manual/en/jsonserializable.jsonserialize.php
+     *
      * @return mixed data which can be serialized by <b>json_encode</b>,
-     * which is a value of any type other than a resource.
+     *               which is a value of any type other than a resource
+     *
      * @since  5.4.0
      */
     public function jsonSerialize()
     {
         return [
-            "id" => $this->getid(),
-            "email" => $this->getEmail(),
-            "password" => $this->getPassword()
+            'id' => $this->getid(),
+            'email' => $this->getEmail(),
+            'password' => $this->getPassword(),
         ];
     }
 }
